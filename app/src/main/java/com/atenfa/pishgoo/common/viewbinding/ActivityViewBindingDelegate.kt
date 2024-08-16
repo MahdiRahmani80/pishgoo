@@ -15,14 +15,14 @@ class ActivityBindingDelegate<T : ViewBinding>(
 ) : ReadOnlyProperty<AppCompatActivity, T> {
 
   private var binding: T? = null
-  private val bindMethod = bindClass.getMethod("bind", LayoutInflater::class.java)
+  private val bindMethod = bindClass.getMethod("inflate", LayoutInflater::class.java)
 
   override fun getValue(thisRef: AppCompatActivity, property: KProperty<*>): T {
     binding?.let {
       return it
     }
     val lifecycle = thisRef.lifecycle
-    if (lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.INITIALIZED)) {
+    if (!lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.INITIALIZED)) {
         error("$ERROR_ACCESS_BINDING ${lifecycle.currentState}")
     }
       binding = bindMethod.invoke(null, thisRef.layoutInflater)!!.cast()
