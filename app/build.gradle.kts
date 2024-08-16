@@ -43,4 +43,9 @@ dependencies {
   testImplementation(libs.junit)
   androidTestImplementation(libs.androidx.junit)
   androidTestImplementation(libs.androidx.espresso.core)
+
+  // koin
+  val koin_android_version = "3.4.3"
+  implementation("io.insert-koin:koin-android:$koin_android_version")
+
 }
