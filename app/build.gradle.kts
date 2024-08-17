@@ -29,9 +29,7 @@ android {
   }
   kotlinOptions { jvmTarget = "1.8" }
 
-  buildFeatures {
-      viewBinding = true
-  }
+  buildFeatures { viewBinding = true }
 }
 
 dependencies {
@@ -45,7 +43,10 @@ dependencies {
   androidTestImplementation(libs.androidx.espresso.core)
 
   // koin
-  val koin_android_version = "3.4.3"
-  implementation("io.insert-koin:koin-android:$koin_android_version")
+  implementation(libs.koin.android)
+
+  // navigation
+  implementation("androidx.navigation:navigation-fragment-ktx:2.5.3") // Or latest version
+  implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
 
 }

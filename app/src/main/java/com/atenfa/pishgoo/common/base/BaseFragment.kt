@@ -1,19 +1,31 @@
 package com.atenfa.pishgoo.common.base
 
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 
-abstract class BaseFragment :
-    Fragment(), PishgooView, CoroutineScope by CoroutineScope(Dispatchers.Main) {
+abstract class BaseFragment(@LayoutRes id: Int) :
+    Fragment(id), PishgooView, CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
   override fun showSnackBar(view: View, message: String, length: Int) {
     val bar = Snackbar.make(view, message, length)
     bar.view.layoutDirection = View.LAYOUT_DIRECTION_RTL
     bar.show()
+  }
+
+  inline fun <reified B : ViewBinding> getRoot(inflater: LayoutInflater, container: ViewGroup?): B {
+    return B::class
+        .java
+        .getMethod(
+            "inflate", LayoutInflater::class.java, ViewGroup::class.java, Boolean::class.java)
+        .invoke(null, inflater, container, false) as B
   }
 
   override fun onDestroy() {
