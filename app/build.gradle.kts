@@ -46,7 +46,14 @@ dependencies {
   implementation(libs.koin.android)
 
   // navigation
-  implementation("androidx.navigation:navigation-fragment-ktx:2.5.3") // Or latest version
+  implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
   implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
+
+  // lifecycle
+  implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.0")
+  implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.0")
+
+  // data store
+  implementation("androidx.datastore:datastore-preferences:1.1.1")
 
 }

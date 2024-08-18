@@ -9,12 +9,18 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 abstract class BaseActivity :
-    AppCompatActivity(), PishgooView, CoroutineScope by CoroutineScope(Dispatchers.Main) {
+    AppCompatActivity(),
+    PishgooView,
+    CoroutineScope by CoroutineScope(Dispatchers.Main),
+    KoinComponent {
 
   private lateinit var navController: NavController
-  private var player: MediaPlayer? = null
+  private val player by inject<MediaPlayer>()
+  private var musicLastState = false
 
   override fun showSnackBar(view: View, message: String, length: Int) {
     val bar = Snackbar.make(view, message, length)
@@ -33,35 +39,25 @@ abstract class BaseActivity :
 
   override fun onDestroy() {
     coroutineContext[Job]?.cancel()
-    player?.stop()
-    player?.release()
+    player.stop()
+    player.release()
     super.onDestroy()
   }
 
   // song setting
-  fun playSongInBackground(bgSound: Int) {
-    if (player == null) {
-      player = MediaPlayer.create(this, bgSound)
-    }
-    player!!.start()
-    player!!.isLooping = true
-  }
-
-  fun stopSongInBackground() {
-    player?.stop()
-  }
-
-  fun pauseSongInBackground() {
-    player?.pause()
+  fun playSongInBackground() {
+    player.start()
+    player.isLooping = true
   }
 
   override fun onStop() {
-    player?.pause()
+    musicLastState = player.isPlaying
+    player.pause()
     super.onStop()
   }
 
   override fun onStart() {
-    player?.start()
+    if (musicLastState) player.start()
     super.onStart()
   }
 }
