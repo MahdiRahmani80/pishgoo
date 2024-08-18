@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.atenfa.pishgoo.R
 import com.atenfa.pishgoo.common.base.BaseFragment
 import com.atenfa.pishgoo.databinding.FragmentHomeBinding
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.core.component.inject
 import viewBinding
@@ -23,11 +24,19 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
     binding.recyclerHome.layoutManager = GridLayoutManager(requireContext(), 5)
     viewModel.emoticon.observe(viewLifecycleOwner) {
-      binding.recyclerHome.adapter = HomeAdapter(it)
+      binding.recyclerHome.adapter = HomeAdapter(requireContext(), it)
     }
 
     binding.fabSound.setOnClickListener {
-      soundFabViewChane(!stopPauseHandling())
+      val bool = stopPauseHandling()
+      viewModel.updateMusicState(requireContext(), bool)
+    }
+
+    launch {
+    viewModel.getData(requireContext()).collect{
+      val state = it.lastMusicState
+      soundFabViewChane(!state)
+    }
     }
   }
 

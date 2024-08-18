@@ -7,7 +7,6 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import org.koin.core.component.KoinComponent
 
 abstract class BaseFragment(@LayoutRes id: Int) :
     Fragment(id), PishgooView, CoroutineScope by CoroutineScope(Dispatchers.Main) {
