@@ -1,6 +1,7 @@
 package com.atenfa.pishgoo
 
 import android.app.Application
+import com.atenfa.pishgoo.utils.Prophecy
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
@@ -10,7 +11,7 @@ class App : Application() {
     super.onCreate()
 
     val modules = module {
-
+      single { Prophecy}
       // view model
       // local
       // remote
