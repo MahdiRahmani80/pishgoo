@@ -7,7 +7,9 @@ import com.atenfa.pishgoo.common.base.BaseViewModel
 import com.atenfa.pishgoo.model.data.Data
 import com.atenfa.pishgoo.model.repository.DataRepository
 import com.atenfa.pishgoo.utils.Constant
+import java.util.Calendar
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: DataRepository) : BaseViewModel() {
@@ -19,15 +21,14 @@ class HomeViewModel(private val repository: DataRepository) : BaseViewModel() {
 
   fun getData(context: Context) = repository.read(context)
 
-  //  fun readProphecy(context: Context, text: String) {
-  //    val date = Calendar.getInstance().timeInMillis
-  //    _data.value.let {
-  //      val newData =
-  //          it?.copy(lastProphecyCheckedTime = date, lastProphecy = text)
-  //              ?: Data(lastProphecy = text, lastProphecyCheckedTime = date)
-  //      viewModelScope.launch { repository.write(context, newData) }
-  //    }
-  //  }
+  fun readProphecy(context: Context, text: String) {
+    val date = Calendar.getInstance().timeInMillis
+    viewModelScope.launch {
+      val newData =
+          getData(context).first().copy(lastProphecy = text, lastProphecyCheckedTime = date)
+      repository.write(context, newData)
+    }
+  }
 
   fun updateMusicState(context: Context, state: Boolean) {
     val newData = Data(lastMusicState = state)

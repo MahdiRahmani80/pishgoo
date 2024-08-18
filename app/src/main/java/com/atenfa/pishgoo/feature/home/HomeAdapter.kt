@@ -17,7 +17,7 @@ class HomeAdapter(private val context: Context, private val list: List<String>) 
 
   private lateinit var binding: ItemHomeBinding
   private val prophecy by inject<Prophecy>()
-  private val viewModel by inject<HomeViewModel>()
+  private val homeViewModel by inject<HomeViewModel>()
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeAdapter.ViewHolder {
     binding = ItemHomeBinding.inflate(LayoutInflater.from(parent.context))
@@ -29,6 +29,7 @@ class HomeAdapter(private val context: Context, private val list: List<String>) 
     val prophecy: String = prophecy.getProphecy(position)
     holder.tvEmoticon.text = list[position]
     holder.tvEmoticon.setOnClickListener {
+      homeViewModel.readProphecy(context, prophecy)
       showDialog(prophecy, it.context)
     }
   }
@@ -44,7 +45,7 @@ class HomeAdapter(private val context: Context, private val list: List<String>) 
         .show()
   }
 
-  inner class ViewHolder(private val binding: ItemHomeBinding) :
+  inner class ViewHolder(binding: ItemHomeBinding) :
       RecyclerView.ViewHolder(binding.root) {
     val tvEmoticon = binding.tvEmoticon
   }

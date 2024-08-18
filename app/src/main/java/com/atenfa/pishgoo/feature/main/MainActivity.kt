@@ -25,7 +25,6 @@ class MainActivity : BaseActivity() {
 
     launch {
       viewModel.getData(this@MainActivity).collect {
-        it
         if (it.lastMusicState) playSongInBackground()
       }
     }

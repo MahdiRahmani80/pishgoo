@@ -10,7 +10,6 @@ import com.atenfa.pishgoo.common.base.BaseFragment
 import com.atenfa.pishgoo.databinding.FragmentHomeBinding
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
-import org.koin.core.component.inject
 import viewBinding
 
 class HomeFragment : BaseFragment(R.layout.fragment_home) {
@@ -33,10 +32,10 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     }
 
     launch {
-    viewModel.getData(requireContext()).collect{
-      val state = it.lastMusicState
-      soundFabViewChane(!state)
-    }
+      viewModel.getData(requireContext()).collect {
+        val state = it.lastMusicState
+        soundFabViewChane(!state)
+      }
     }
   }
 
