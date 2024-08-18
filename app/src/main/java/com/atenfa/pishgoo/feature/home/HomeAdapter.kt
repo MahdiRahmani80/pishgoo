@@ -9,6 +9,11 @@ import com.atenfa.pishgoo.R
 import com.atenfa.pishgoo.databinding.DialogShowProphecyBinding
 import com.atenfa.pishgoo.databinding.ItemHomeBinding
 import com.atenfa.pishgoo.utils.Prophecy
+import java.util.Calendar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -29,8 +34,18 @@ class HomeAdapter(private val context: Context, private val list: List<String>) 
     val prophecy: String = prophecy.getProphecy(position)
     holder.tvEmoticon.text = list[position]
     holder.tvEmoticon.setOnClickListener {
-      homeViewModel.readProphecy(context, prophecy)
-      showDialog(prophecy, it.context)
+      CoroutineScope(Dispatchers.Main).launch {
+        val time = homeViewModel.getData(context).first().lastProphecyCheckedTime
+        val t = time + 5 * 60 * 1000
+        if (Calendar.getInstance().timeInMillis >= t) {
+          homeViewModel.readProphecy(context, prophecy)
+          showDialog(prophecy, it.context)
+        }
+        else {
+          val timeLeft = (t - Calendar.getInstance().timeInMillis) / 1000
+          showDialog(context.getString(R.string.try_again) + "\n زمان باقی مانده:  $timeLeft "+ "ثانیه", it.context)
+        }
+      }
     }
   }
 
@@ -45,8 +60,7 @@ class HomeAdapter(private val context: Context, private val list: List<String>) 
         .show()
   }
 
-  inner class ViewHolder(binding: ItemHomeBinding) :
-      RecyclerView.ViewHolder(binding.root) {
+  inner class ViewHolder(binding: ItemHomeBinding) : RecyclerView.ViewHolder(binding.root) {
     val tvEmoticon = binding.tvEmoticon
   }
 }
