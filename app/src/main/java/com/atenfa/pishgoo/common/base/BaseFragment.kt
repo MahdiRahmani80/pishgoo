@@ -20,14 +20,6 @@ abstract class BaseFragment(@LayoutRes id: Int) :
     bar.show()
   }
 
-  inline fun <reified B : ViewBinding> getRoot(inflater: LayoutInflater, container: ViewGroup?): B {
-    return B::class
-        .java
-        .getMethod(
-            "inflate", LayoutInflater::class.java, ViewGroup::class.java, Boolean::class.java)
-        .invoke(null, inflater, container, false) as B
-  }
-
   override fun onDestroy() {
     coroutineContext[Job]?.cancel()
     super.onDestroy()
