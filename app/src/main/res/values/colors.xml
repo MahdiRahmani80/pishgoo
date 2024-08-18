@@ -2,4 +2,16 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--    dark-->
+    <color name="night_blue">#002B4E</color>
+    <color name="night_dark_pink">#A64F69</color>
+    <color name="night_dark_blue">#001437</color>
+    <color name="night_mid_blue">#242950</color>
+
+    <!--    light -->
+    <color name="light_blue">#86B0FF</color>
+    <color name="light_purple">#E0CBDE</color>
+    <color name="mid_blue">#809BFF</color>
+    <color name="gray">#B3B6DD</color>
 </resources>

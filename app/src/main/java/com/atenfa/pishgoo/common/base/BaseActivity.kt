@@ -51,6 +51,10 @@ abstract class BaseActivity :
     player?.stop()
   }
 
+  fun pauseSongInBackground() {
+    player?.pause()
+  }
+
   override fun onStop() {
     player?.pause()
     super.onStop()

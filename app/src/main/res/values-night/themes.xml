@@ -1,7 +1,21 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Pishgoo" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/night_blue</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/night_dark_pink</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorTertiary">@color/night_mid_blue</item>
+        <item name="colorOnTertiary">@color/white</item>
+        <item name="colorSurface">@color/night_dark_blue</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorOnBackground">@color/white</item>
+        <item name="backgroundColor">@color/night_dark_blue</item>
+
+        <item name="android:statusBarColor">?colorSurface</item>
+
+        <item name="fontFamily">@font/iran_sans</item>
+        <item name="font">@font/iran_sans</item>
+        <item name="android:fontFamily">@font/iran_sans</item>
     </style>
 </resources>
