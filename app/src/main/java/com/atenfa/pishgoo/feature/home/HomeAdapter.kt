@@ -1,8 +1,12 @@
 package com.atenfa.pishgoo.feature.home
 
+import android.app.AlertDialog
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.atenfa.pishgoo.R
+import com.atenfa.pishgoo.databinding.DialogShowProphecyBinding
 import com.atenfa.pishgoo.databinding.ItemHomeBinding
 
 class HomeAdapter(private val list: List<String>) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
@@ -16,14 +20,22 @@ class HomeAdapter(private val list: List<String>) : RecyclerView.Adapter<HomeAda
 
   override fun onBindViewHolder(holder: HomeAdapter.ViewHolder, position: Int) {
     holder.tvEmoticon.text = list[position]
-    holder.tvEmoticon.setOnClickListener {
-      // todo: click event
-    }
+    holder.tvEmoticon.setOnClickListener { showDialog("mahdi", it.context) }
   }
 
   override fun getItemCount() = list.size
 
-  inner class ViewHolder(private val binding: ItemHomeBinding) : RecyclerView.ViewHolder(binding.root) {
+  private fun showDialog(text: String, ctx: Context) {
+    val d = DialogShowProphecyBinding.inflate(LayoutInflater.from(ctx))
+    d.txt.text = text
+    AlertDialog.Builder(ctx)
+        .setView(d.root)
+        .setPositiveButton(ctx.getString(R.string.back)) { _, _ -> }
+        .show()
+  }
+
+  inner class ViewHolder(private val binding: ItemHomeBinding) :
+      RecyclerView.ViewHolder(binding.root) {
     val tvEmoticon = binding.tvEmoticon
   }
 }
