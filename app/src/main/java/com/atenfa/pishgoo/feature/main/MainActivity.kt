@@ -7,6 +7,8 @@ import com.atenfa.pishgoo.common.base.BaseActivity
 import com.atenfa.pishgoo.common.viewbinding.viewBinding
 import com.atenfa.pishgoo.databinding.ActivityMainBinding
 import com.atenfa.pishgoo.utils.Constant.SPLASH_DURATION
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.core.component.inject
@@ -23,9 +25,10 @@ class MainActivity : BaseActivity() {
     navController = makeNavigation(binding.navHostFragment.id)
     showSplash()
 
-    launch {
+    CoroutineScope(Dispatchers.IO).launch {
       viewModel.getData(this@MainActivity).collect {
-        if (it.lastMusicState) playSongInBackground()
+        if (it.lastMusicState)
+          playSongInBackground()
       }
     }
   }

@@ -21,7 +21,6 @@ abstract class BaseActivity :
   private lateinit var navController: NavController
   private val player by inject<MediaPlayer>()
   private var musicLastState = false
-  private val viewModel by inject<BaseViewModel>()
 
   override fun showSnackBar(view: View, message: String, length: Int) {
     val bar = Snackbar.make(view, message, length)
